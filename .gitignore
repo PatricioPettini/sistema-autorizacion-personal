@@ -1,0 +1,50 @@
+# Dependencias
+node_modules/
+**/node_modules/
+
+# Build
+dist/
+build/
+frontend/dist/
+backend/dist/
+
+# Configuración y secretos (NUNCA subir)
+.env
+*.env
+!.env.example
+
+# Base de datos y almacenamiento reales
+/storage/
+data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+
+# Backups
+backups/
+
+# Logs
+logs/
+*.log
+
+# OCR / datos de idioma descargados en runtime
+*.traineddata
+
+# Configuración local de Claude Code / editores
+.claude/settings.local.json
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Datos temporales
+tmp/
+temp/
+
+# Storage que generan los tests
+/storage-pruebas-claude/
+/storage-demo/

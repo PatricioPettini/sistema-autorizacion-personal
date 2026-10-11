@@ -1,0 +1,266 @@
+:root {
+  --bg: #f4f6fb;
+  --panel: #ffffff;
+  --panel-2: #f8fafc;
+  --border: #e3e8f0;
+  --text: #1b2434;
+  --muted: #64748b;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-soft: #e8f0fe;
+
+  --green: #16a34a;
+  --green-soft: #dcfce7;
+  --yellow: #d97706;
+  --yellow-soft: #fef3c7;
+  --orange: #ea580c;
+  --orange-soft: #ffedd5;
+  --red: #dc2626;
+  --red-soft: #fee2e2;
+  --blue: #2563eb;
+  --blue-soft: #dbeafe;
+  --slate-soft: #eef2f7;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-lg: 0 10px 30px rgba(16, 24, 40, 0.12);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+a { color: var(--primary); text-decoration: none; }
+h1, h2, h3, h4 { margin: 0 0 0.4em; font-weight: 650; letter-spacing: -0.01em; }
+h1 { font-size: 22px; }
+h2 { font-size: 18px; }
+h3 { font-size: 15px; }
+input, select, textarea, button { font-family: inherit; font-size: 14px; }
+
+/* ---------- Layout ---------- */
+.app { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 244px; background: #0f172a; color: #cbd5e1; display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh; flex-shrink: 0;
+}
+.sidebar .brand { padding: 20px 20px 14px; color: #fff; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+.sidebar .brand .logo { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6, #2563eb); display: grid; place-items: center; font-size: 16px; }
+.sidebar nav { padding: 8px; overflow-y: auto; flex: 1; }
+.sidebar .nav-group { padding: 14px 12px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #64748b; }
+.sidebar a.nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px;
+  color: #cbd5e1; font-weight: 500; margin: 1px 0; transition: background .12s;
+}
+.sidebar a.nav-item:hover { background: #1e293b; color: #fff; }
+.sidebar a.nav-item.active { background: var(--primary); color: #fff; }
+.sidebar a.nav-item .ico { width: 18px; text-align: center; }
+.sidebar a.nav-item .pill { margin-left: auto; background: #ef4444; color: #fff; border-radius: 999px; font-size: 11px; padding: 0 7px; line-height: 18px; }
+.sidebar .userbox { padding: 12px 16px; border-top: 1px solid #1e293b; font-size: 13px; }
+.sidebar .userbox .name { color: #fff; font-weight: 600; }
+.sidebar .userbox .rol { color: #64748b; font-size: 12px; }
+
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.topbar { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 26px; height: 60px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 5; }
+.topbar .search { flex: 1; max-width: 460px; position: relative; }
+.topbar .search input { width: 100%; padding: 9px 12px 9px 34px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel-2); }
+.topbar .search .ico { position: absolute; left: 11px; top: 9px; color: var(--muted); }
+.content { padding: 24px 26px 60px; max-width: 1760px; width: 100%; }
+.page-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; gap: 12px; flex-wrap: wrap; }
+.page-head .subtitle { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+/* ---------- Cards ---------- */
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.card .card-body { padding: 18px; }
+.card .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); font-weight: 650; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.grid { display: grid; gap: 16px; }
+/* Un item de grid (o de flex) no baja del ancho minimo de su contenido salvo que se le permita.
+   Sin esto, una tabla ancha estira su columna y toda la pantalla scrollea en horizontal en el
+   celular: medido en 375 px, las tarjetas del panel quedaban en 442 px. La tabla scrollea sola
+   dentro de .table-wrap, que es lo que corresponde. */
+.grid > *, .card { min-width: 0; }
+.grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid.kpis { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+@media (max-width: 900px) { .grid.cols-2, .grid.cols-3 { grid-template-columns: 1fr; } }
+
+.kpi { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
+.kpi .label { color: var(--muted); font-size: 12.5px; font-weight: 500; display: flex; align-items: center; gap: 7px; }
+.kpi .value { font-size: 30px; font-weight: 700; margin-top: 4px; letter-spacing: -0.02em; }
+.kpi .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+/* ---------- Badges ---------- */
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.badge .dot { width: 7px; height: 7px; border-radius: 50%; }
+.badge.green { background: var(--green-soft); color: #15803d; }
+.badge.yellow { background: var(--yellow-soft); color: #b45309; }
+.badge.orange { background: var(--orange-soft); color: #c2410c; }
+.badge.red { background: var(--red-soft); color: #b91c1c; }
+.badge.blue { background: var(--blue-soft); color: #1d4ed8; }
+.badge.slate { background: var(--slate-soft); color: #475569; }
+
+/* ---------- Tables ---------- */
+table.tbl { width: 100%; border-collapse: collapse; }
+table.tbl th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); padding: 10px 14px; border-bottom: 1px solid var(--border); font-weight: 600; }
+table.tbl td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+table.tbl tr:last-child td { border-bottom: none; }
+table.tbl tbody tr:hover { background: var(--panel-2); }
+.table-wrap { overflow-x: auto; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 15px; border-radius: 9px; border: 1px solid var(--border); background: var(--panel); color: var(--text); font-weight: 600; cursor: pointer; transition: all .12s; }
+.btn:hover { background: var(--panel-2); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn.primary:hover { background: var(--primary-dark); }
+.btn.success { background: var(--green); border-color: var(--green); color: #fff; }
+.btn.warning { background: var(--yellow); border-color: var(--yellow); color: #fff; }
+.btn.danger { background: var(--red); border-color: var(--red); color: #fff; }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.sm { padding: 6px 11px; font-size: 13px; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- Forms ---------- */
+.field { margin-bottom: 14px; }
+.field label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; }
+.field input, .field select, .field textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.field .hint { color: var(--muted); font-size: 12px; margin-top: 4px; }
+.form-row { display: flex; gap: 12px; } .form-row > * { flex: 1; }
+
+/* Selector de fecha compacto (pill), ej. "Vence" en el checklist de documentación */
+.venc-field {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--panel-2); padding: 4px 8px 4px 10px;
+  font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap;
+  transition: border-color .12s, box-shadow .12s;
+}
+.venc-field:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.venc-field input[type="date"] {
+  border: none; background: transparent; padding: 0; margin: 0;
+  font-size: 13px; font-weight: 500; color: var(--text); font-family: inherit; cursor: pointer;
+}
+.venc-field input[type="date"]:focus { outline: none; }
+.venc-field input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: .55; }
+.venc-field input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+/* ---------- Misc ---------- */
+.muted { color: var(--muted); }
+.tag-ok { color: var(--green); font-weight: 600; }
+.tag-miss { color: var(--red); font-weight: 600; }
+.doc-list { list-style: none; padding: 0; margin: 0; }
+.doc-list li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px dashed var(--border); }
+.doc-list li:last-child { border-bottom: none; }
+.doc-list .check { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; color: #fff; flex-shrink: 0; }
+.doc-list .check.ok { background: var(--green); }
+.doc-list .check.no { background: var(--red); }
+.doc-list .check.warn { background: var(--yellow); }
+
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+.spinner { width: 20px; height: 20px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.center-screen { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+
+/* Login / setup */
+.auth-card { width: 100%; max-width: 400px; }
+.auth-logo { width: 52px; height: 52px; border-radius: 14px; background: linear-gradient(135deg, #3b82f6, #2563eb); display: grid; place-items: center; font-size: 26px; margin: 0 auto 14px; }
+
+/* Modal */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); display: grid; place-items: center; z-index: 50; padding: 20px; }
+.modal { background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow-lg); width: 100%; max-width: 520px; max-height: 90vh; overflow: auto; }
+.modal .modal-head { padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 650; display: flex; justify-content: space-between; align-items: center; }
+.modal .modal-body { padding: 20px; }
+.modal .modal-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
+
+.toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 60; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
+.toast .item { background: #0f172a; color: #fff; padding: 12px 16px; border-radius: 10px; box-shadow: var(--shadow-lg); font-weight: 500; max-width: 360px; }
+.toast .item.error { background: var(--red); }
+.toast .item.success { background: var(--green); }
+
+.alert { padding: 12px 14px; border-radius: 10px; font-size: 13.5px; margin-bottom: 14px; }
+.alert.info { background: var(--blue-soft); color: #1e40af; }
+.alert.warn { background: var(--yellow-soft); color: #92400e; }
+.alert.error { background: var(--red-soft); color: #991b1b; }
+.alert.success { background: var(--green-soft); color: #166534; }
+
+.person-lookup { font-size: 15px; }
+.person-lookup .big-name { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+.person-lookup .big-status { font-size: 20px; font-weight: 700; padding: 10px 16px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px; margin: 6px 0; }
+.stat-line { display: flex; gap: 8px; align-items: baseline; }
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+.chip { display: inline-block; padding: 2px 9px; background: var(--slate-soft); border-radius: 6px; font-size: 12px; color: var(--muted); font-weight: 500; }
+
+/* ==========================================================================
+   Responsive
+   Abajo de 1024 px la sidebar pasa a ser un cajón que se abre con el botón ☰
+   del topbar. Antes tenía `display: none` y en celular no quedaba NINGUNA
+   forma de navegar: el menú simplemente no existía.
+   ========================================================================== */
+
+/* El botón del menú solo aparece cuando la sidebar está en modo cajón. */
+.menu-btn { display: none; background: transparent; border: 1px solid var(--border); border-radius: 9px; padding: 7px 11px; font-size: 17px; line-height: 1; cursor: pointer; }
+.sidebar-backdrop { display: none; }
+
+@media (max-width: 1024px) {
+  .menu-btn { display: inline-flex; align-items: center; }
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; z-index: 40; width: 260px;
+    transform: translateX(-100%); transition: transform .18s ease-out;
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.abierta { transform: translateX(0); }
+  .sidebar-backdrop.visible { display: block; position: fixed; inset: 0; background: rgba(15, 23, 42, .45); z-index: 39; }
+  .content { padding: 18px 16px 48px; }
+  .topbar { padding: 0 14px; gap: 10px; }
+  .topbar .search { max-width: none; }
+}
+
+/* Tablet vertical y celular grande */
+@media (max-width: 760px) {
+  h1 { font-size: 19px; }
+  .content { padding: 14px 12px 44px; }
+  .card .card-body { padding: 14px; }
+  .card .card-head { padding: 12px 14px; }
+  /* Los formularios de dos columnas no entran: se apilan. */
+  .form-row { flex-direction: column; gap: 0; }
+  .grid.kpis { grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 10px; }
+  .kpi { padding: 12px 14px; }
+  .kpi .value { font-size: 24px; }
+  /* El modal ocupa la pantalla: en 360 px de ancho un modal centrado con margen no sirve. */
+  .modal-backdrop { padding: 0; align-items: stretch; }
+  .modal { max-width: none; max-height: 100vh; height: 100%; border-radius: 0; }
+  .modal .modal-foot { position: sticky; bottom: 0; background: var(--panel); }
+  table.tbl th, table.tbl td { padding: 9px 10px; }
+  .page-head { align-items: flex-start; }
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  body { font-size: 13.5px; }
+  .content { padding: 12px 10px 40px; }
+  .grid.kpis { grid-template-columns: 1fr 1fr; }
+  .btn { padding: 8px 12px; }
+  .btn-row .btn { flex: 1 1 auto; justify-content: center; }
+  .toast { left: 10px; right: 10px; transform: none; }
+  .toast .item { max-width: none; }
+}
+
+/* La revisión de documentación es de dos columnas (checklist | PDF). En pantalla angosta
+   se apilan: al lado, ninguna de las dos sirve. */
+@media (max-width: 900px) {
+  .revision-cols { flex-direction: column; }
+  .revision-cols > * { border-right: none !important; flex: 0 0 auto !important; max-height: none !important; }
+}
+
+/* Pantallas muy anchas: que las tablas respiren en vez de estirarse hasta el borde. */
+@media (min-width: 1900px) {
+  .content { padding-left: 40px; padding-right: 40px; }
+}
+
+/* Impresión: sin menú ni botones, para que un informe salga limpio. */
+@media print {
+  .sidebar, .topbar, .btn, .menu-btn { display: none !important; }
+  .content { max-width: none; padding: 0; }
+  .card { box-shadow: none; border-color: #ccc; }
+}

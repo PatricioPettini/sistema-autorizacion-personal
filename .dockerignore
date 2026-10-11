@@ -1,0 +1,29 @@
+# Dependencias y build (se instalan/compilan dentro de la imagen)
+node_modules
+**/node_modules
+dist
+backend/dist
+frontend/dist
+
+# IMPORTANTE: anclar a la raiz con "/" para NO excluir codigo con el mismo nombre
+# (ej. backend/src/modules/storage es codigo, NO la carpeta de datos "storage/").
+/storage
+/data
+/backups
+/logs
+/tmp
+/temp
+
+# Secretos y datos locales
+.env
+*.env
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.traineddata
+
+# Otros
+.git
+.claude

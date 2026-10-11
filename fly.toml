@@ -1,0 +1,57 @@
+app = "sistema-autorizacion-personal-shopping"
+primary_region = "gru"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  STORAGE_PATH = "/data/storage"
+  HOST = "0.0.0.0"
+  PORT = "8080"
+  TZ = "America/Argentina/Buenos_Aires"
+
+  # --- Casilla del sistema. Las CONTRASEÑAS no van acá: son secretos.
+  #     flyctl secrets set MAIL_IMAP_PASSWORD=... MAIL_SMTP_PASSWORD=...
+  MAIL_IMAP_HOST = "mail.shopping.example"
+  MAIL_IMAP_PORT = "993"
+  MAIL_IMAP_SECURE = "true"
+  MAIL_IMAP_USER = "seguridad@shopping.example"
+  MAIL_SMTP_HOST = "mail.shopping.example"
+  MAIL_SMTP_PORT = "587"
+  MAIL_SMTP_SECURE = "false"
+  MAIL_SMTP_USER = "seguridad@shopping.example"
+  MAIL_FROM_NAME = "Seguridad Shopping"
+  MAIL_FROM_ADDRESS = "seguridad@shopping.example"
+  MAIL_POLL_MINUTES = "5"
+  # El correo volvió a andar el 03/09: desde esa fecha los pedidos se procesan solos otra vez.
+  # Lo ANTERIOR sigue yendo al respaldo, porque se cargó a mano durante la caída y procesarlo
+  # crearía la solicitud por segunda vez. Cubre también a un correo de esos días que llegue tarde
+  # (los servidores de quien envía reintentan por varios días). Vaciar la variable apaga el filtro.
+  MAIL_REVISAR_ANTES_DE = "2026-09-03"
+
+  # Lectura automática de la documentación adjunta (etapas 1 y 2): dice qué es cada papel y a
+  # quién nombra, sin aprobar nada. En "0" la pantalla de documentación vuelve exactamente a
+  # como estaba antes: es la vuelta atrás, no hace falta deploy de código.
+  ANALISIS_ADJUNTOS = "1"
+
+  # APAGADO a pedido del cliente (2026-09-28): la mayoria de las veces la nomina esta adentro del
+  # PDF y se carga a mano, asi que el aviso automatico quedaba mal —el local ya la habia mandado—.
+  # El correo igual queda frenado en el respaldo, que es lo que evita la solicitud vacia; para
+  # pedirla esta el boton "Pedir la nomina" adentro de la solicitud.
+  MAIL_AVISO_SIN_PERSONAS = "0"
+
+  # Meses que se conservan los .eml en disco. Son el 97% del almacenamiento y crecen
+  # ~670 MB por mes; el original sigue estando en la casilla, que no se toca.
+  MAIL_RETENCION_MESES = "3"
+
+[mounts]
+  source = "data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
